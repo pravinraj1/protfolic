@@ -11,10 +11,12 @@ import ContactPage from './pages/ContactPage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import BlogPostPage from './pages/BlogPostPage';
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 const App: React.FC = () => {
   return (
     <div className="bg-[#BFABD4] min-h-screen text-slate-800 font-sans flex flex-col">
+      <SpeedInsights />
       <Header />
       <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Routes>
