@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import ReactMarkdown from 'react-markdown';
 
 interface BlogPost {
   id: string;
@@ -9,7 +10,7 @@ interface BlogPost {
   content: string;
   author_id: string;
   is_published: boolean;
-  image_url?: string; // Added optional image_url
+  image_url?: string; // This will be the main header image
 }
 
 const BlogPostPage: React.FC = () => {
@@ -30,7 +31,7 @@ const BlogPostPage: React.FC = () => {
         .from('posts')
         .select('*')
         .eq('id', id)
-        .eq('is_published', true) // Ensure only published posts are viewable publicly
+        .eq('is_published', true)
         .single();
 
       if (error) {
@@ -72,14 +73,28 @@ const BlogPostPage: React.FC = () => {
   }
 
   return (
-    <div className="blog-post-container py-12 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto bg-white/20 backdrop-blur-md rounded-lg shadow-lg">
-      <h1 className="text-4xl font-bold mb-4 text-gray-800">{post.title}</h1>
-      <p className="text-gray-600 text-sm mb-6">Published on: {new Date(post.created_at).toLocaleDateString()}</p>
-      {post.image_url && <img src={post.image_url} alt={post.title} className="w-full h-auto mb-6 rounded" />}
-      <div className="prose lg:prose-xl text-gray-700 leading-relaxed">
-        <p>{post.content}</p>
+    <article className="py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+      <div className="text-center mb-8">
+        <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-slate-800">{post.title}</h1>
+        <p className="text-slate-600 text-md">
+          Published on {new Date(post.created_at).toLocaleDateString()}
+        </p>
       </div>
-    </div>
+
+      {post.image_url && (
+        <img 
+          src={post.image_url} 
+          alt={post.title} 
+          className="w-full h-auto max-h-[500px] object-cover rounded-lg shadow-xl mb-12" 
+        />
+      )}
+
+      <div className="bg-white/30 backdrop-blur-md rounded-lg shadow-lg p-6 md:p-10">
+        <div className="prose-styles">
+          <ReactMarkdown>{post.content}</ReactMarkdown>
+        </div>
+      </div>
+    </article>
   );
 };
 

@@ -12,16 +12,24 @@ interface BlogPost {
   image_url?: string; // Added optional image_url
 }
 
-const BlogCard: React.FC<{ post: BlogPost }> = ({ post }) => (
-  <div className="bg-white/20 backdrop-blur-md rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2 group">
-    {post.image_url && <img src={post.image_url} alt={post.title} className="w-full h-48 object-cover"/>}
-    <div className="p-6">
-      <h3 className="text-2xl font-bold mb-2">{post.title}</h3>
-      {/* Displaying a truncated version of content as excerpt */}
-      <p className="text-slate-700 mb-4">{post.content.substring(0, 150)}...</p>
-      <NavLink to={`/blog/${post.id}`} className="text-[#F4F754] bg-slate-800 px-4 py-2 rounded font-semibold hover:bg-slate-900 transition-colors">
-        Read More &rarr;
-      </NavLink>
+const BlogCard: React.FC<{ post: BlogPost; index: number }> = ({ post, index }) => (
+  <div
+    className="flip-card animate-zoom-in"
+    style={{ "--delay": `${index * 100}ms` } as React.CSSProperties}
+  >
+    <div className="flip-card-inner">
+      <div className="flip-card-front bg-slate-300/30 backdrop-blur-md shadow-lg">
+        {post.image_url && <img src={post.image_url} alt={post.title} className="w-full h-48 object-cover"/>}
+        <div className="p-6 flex-grow flex flex-col justify-center">
+          <h3 className="text-2xl font-bold">{post.title}</h3>
+        </div>
+      </div>
+      <div className="flip-card-back">
+        <p className="text-slate-800 mb-4 text-sm">{post.content.substring(0, 150)}...</p>
+        <NavLink to={`/blog/${post.id}`} className="bg-[#F4F754] text-slate-900 font-semibold py-2 px-4 rounded-md hover:bg-yellow-300 transition-colors">
+          Read More &rarr;
+        </NavLink>
+      </div>
     </div>
   </div>
 );
@@ -79,8 +87,8 @@ const BlogPage: React.FC = () => {
         {posts.length === 0 ? (
           <p className="text-center text-xl col-span-full">No published blog posts yet. Check back soon!</p>
         ) : (
-          posts.map((post) => (
-            <BlogCard key={post.id} post={post} />
+          posts.map((post, index) => (
+            <BlogCard key={post.id} post={post} index={index} />
           ))
         )}
       </div>
