@@ -35,7 +35,7 @@ const AboutPage: React.FC = () => {
       {/* Experience Section */}
       <div className="max-w-4xl mx-auto px-4 animate-reveal delay-300">
         <h2 className="text-3xl font-bold mb-8 text-center">Experience</h2>
-        <div className="space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-white/40 backdrop-blur-md rounded-xl p-6 shadow-lg border border-white/50 hover:shadow-xl transition-shadow">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
               <div>
