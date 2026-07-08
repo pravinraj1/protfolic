@@ -9,7 +9,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "predeploy": "pnpm build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages --repo https://github.com/pravinraj1/protfolic.git -d dist"
   },
   "dependencies": {
     "@react-three/fiber": "^9.4.0",
